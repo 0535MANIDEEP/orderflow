@@ -1,10 +1,20 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { ProductCatalog } from './pages/ProductCatalog'
+import { Cart } from './pages/Cart'
+import { OrderConfirmation } from './pages/OrderConfirmation'
+import { OrderTracking } from './pages/OrderTracking'
+import { AdminDashboard } from './pages/AdminDashboard'
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<div className="bg-gray-900 text-white min-h-screen p-8"><h1 className="text-3xl font-bold">OrderFlow</h1><p className="mt-4 text-gray-400">Order Management System</p></div>} />
+        <Route path="/" element={<ProductCatalog />} />
+        <Route path="/products" element={<ProductCatalog />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/order/confirm/:orderNumber" element={<OrderConfirmation />} />
+        <Route path="/order/:orderNumber" element={<OrderTracking />} />
+        <Route path="/admin" element={<AdminDashboard />} />
       </Routes>
     </BrowserRouter>
   )
