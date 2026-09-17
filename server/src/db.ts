@@ -1,12 +1,10 @@
 import { Pool } from 'pg';
 
+
 const pool = new Pool({
-  user: process.env.DB_USER || 'postgres',
-  host: process.env.DB_HOST || 'localhost',
-  database: process.env.DB_NAME || 'orderflow',
-  password: process.env.DB_PASSWORD || '',
-  port: parseInt(process.env.DB_PORT || '5432'),
+  connectionString: process.env.DATABASE_URL || `postgresql://${process.env.DB_USER || 'postgres'}:${process.env.DB_PASSWORD || ''}@${process.env.DB_HOST || 'localhost'}:${process.env.DB_PORT || '5432'}/${process.env.DB_NAME || 'orderflow'}`,
 });
+
 
 export async function initDb(): Promise<void> {
   const client = await pool.connect();
@@ -55,8 +53,10 @@ export async function initDb(): Promise<void> {
   }
 }
 
+
 export async function closeDb(): Promise<void> {
   await pool.end();
 }
+
 
 export { pool };
