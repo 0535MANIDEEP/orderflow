@@ -1,0 +1,38 @@
+services:
+  - type: web
+    name: orderflow-api
+    runtime: node
+    region: oregon
+    plan: free
+    buildCommand: cd server && npm ci && npm run build
+    startCommand: cd server && node dist/app.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5000
+      - key: DB_USER
+        fromDatabase:
+          name: orderflow-db
+          property: user
+      - key: DB_HOST
+        fromDatabase:
+          name: orderflow-db
+          property: host
+      - key: DB_NAME
+        fromDatabase:
+          name: orderflow-db
+          property: database
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: orderflow-db
+          property: password
+      - key: DB_PORT
+        fromDatabase:
+          name: orderflow-db
+          property: port
+    healthCheckPath: /api/health
+
+databases:
+  - name: orderflow-db
+    plan: free
